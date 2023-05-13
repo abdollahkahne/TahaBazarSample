@@ -1,0 +1,518 @@
+@page
+@model SampleForTahaBazar.WebApplication.Pages.Invoices.Edit
+@using SampleForTahaBazar.Entities.DataTransferObject
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
+@inject IViewLocalizer _localizer
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <div class="card p-3 bg-light">
+        <form method="post">
+            <input type="hidden" asp-for="Invoice.Id">
+            <span asp-validation-for="Invoice"></span>
+            <div class="form-group">
+                <label asp-for="Invoice.InvoiceDate">@_localizer["Invoice Date"]</label>
+                <input type="date" asp-for="Invoice.InvoiceDate" class="form-control">
+                <span asp-validation-for="Invoice.InvoiceDate"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invoice.Description">@_localizer["Description"]</label>
+                <textarea asp-for="Invoice.Description" class="form-control"></textarea>
+            </div>
+            <h4 class="mt-5">@_localizer["Products"]</h4>
+            <div>
+                <table id="invoice-lines" class="table table-condensed table-sm">
+                    <thead>
+                        <tr>
+                            <th style="max-width:0;" scope="col"></th>
+                            <th style="max-width:0;" scope="col"></th>
+                            <th scope="col">@_localizer["Product"]</th>
+                            <th scope="col">@_localizer["Price"]</th>
+                            <th style="max-width: 0;" scope="col"></th>
+                            <th scope="col">@_localizer["Unit"]</th>
+                            <th scope="col">@_localizer["Count"]</th>
+                            <th scope="col">@_localizer["Gross"]</th>
+                            <th scope="col">@_localizer["Taxes"]</th>
+                            <th scope="col">@_localizer["Discount"]</th>
+                            <th scope="col">@_localizer["Net"]</th>
+                            <th scope="col">@_localizer["X"]</th>
+                            <th style="max-width: 0;" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Invoice.SalesLines is not null)
+                        {
+                            for (int i = 0; i < Model.Invoice.SalesLines.Count(); i++)
+                            {
+                                <tr>
+                                    <td scope="col">
+                                        <input readonly required type="hidden" name="Invoice.SalesLines[@i].Id" class="id"
+                                    value="@((Model.Invoice.SalesLines as List<SalesLineDto>)[i].Id)">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="hidden" name="Invoice.SalesLines[@i].ProductId" class="productId"
+                                    value="@((Model.Invoice.SalesLines as List<SalesLineDto>)[i].ProductId)">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="text" class="form-control dropdown product"
+                                    placeholder="@_localizer["Product"]"
+                                    value="@((Model.Invoice.SalesLines as List<SalesLineDto>)[i].Product.Name)">
+                                        <div class="dropdown-menu products-list">
+                                        </div>
+                                    </td>
+                                    <td scope="col">
+                                        <input type="number"
+                                    value="@((Model.Invoice.SalesLines as List<SalesLineDto>)[i].UnitPrice)"
+                                    class="form-control price" name="Invoice.SalesLines[@i].UnitPrice"
+                                    placeholder="@_localizer["Price"]">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="hidden" class="unitId" name="Invoice.SalesLines[@i].UnitOfMeasurementId"
+                                    value="@((Model.Invoice.SalesLines as List<SalesLineDto>)[i].UnitOfMeasurementId)">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="text" class="form-control dropdown unit"
+                                    value="@((Model.Invoice.SalesLines as List<SalesLineDto>)[i].UnitOfMeasurement.Name)"
+                                    placeholder="@_localizer["Unit"]">
+                                        <div class="dropdown-menu units-list">
+                                        </div>
+                                    </td>
+                                    <td scope="col">
+                                        <input type="number"
+                                    value="@((Model.Invoice.SalesLines as List<SalesLineDto>)[i].Count)"
+                                    class="form-control count" name="Invoice.SalesLines[@i].Count"
+                                    placeholder="@_localizer["Count"]">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="number" readonly
+                                    value="@((Model.Invoice.SalesLines as List<SalesLineDto>)[i].GrossTotalPrice)"
+                                    class="form-control gross" name="Invoice.SalesLines[@i].GrossTotalPrice"
+                                    placeholder="@_localizer["Gross"]">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="number"
+                                    value="@((Model.Invoice.SalesLines as List<SalesLineDto>)[i].Taxes)"
+                                    class="form-control taxes" name="Invoice.SalesLines[@i].Taxes"
+                                    placeholder="@_localizer["Taxes"]">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="number"
+                                    value="@((Model.Invoice.SalesLines as List<SalesLineDto>)[i].Discount)"
+                                    class="form-control discount" name="Invoice.SalesLines[@i].Discount"
+                                    placeholder="@_localizer["Discount"]">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="number" readonly
+                                    value="@((Model.Invoice.SalesLines as List<SalesLineDto>)[i].NetTotalPrice)"
+                                    class="form-control net" name="Invoice.SalesLines[@i].NetTotalPrice"
+                                    placeholder="@_localizer["Net"]">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="hidden"
+                                    value="@((Model.Invoice.SalesLines as List<SalesLineDto>)[i].InvoiceLineState)"
+                                    class="form-control linestate" name="Invoice.SalesLines[@i].InvoiceLineState">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn-secondary RemoveSaleLine">Remove</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td scope="col">
+                                @* this column is only added for alignment purposes *@
+                            </td>
+                            <td scope="col">
+                                <input type="hidden" class="productId">
+                            </td>
+                            <td scope="col">
+                                <input type="text" class="form-control dropdown product"
+                                    placeholder="@_localizer["Product"]">
+                                <div class="dropdown-menu products-list">
+                                </div>
+                            </td>
+                            <td scope="col">
+                                <input type="number" value="0" class="form-control price"
+                                    placeholder="@_localizer["Price"]">
+                            </td>
+                            <td scope="col">
+                                <input type="hidden" class="unitId">
+                            </td>
+                            <td scope="col">
+                                <input type="text" class="form-control dropdown unit" placeholder="@_localizer["Unit"]">
+                                <div class="dropdown-menu units-list">
+                                </div>
+                            </td>
+                            <td scope="col">
+                                <input type="number" value="0" class="form-control count"
+                                    placeholder="@_localizer["Count"]">
+                            </td>
+                            <td scope="col">
+                                <input type="number" readonly class="form-control gross"
+                                    placeholder="@_localizer["Gross"]">
+                            </td>
+                            <td scope="col">
+                                <input type="number" value="0" class="form-control taxes"
+                                    placeholder="@_localizer["Taxes"]">
+                            </td>
+                            <td scope="col">
+                                <input type="number" value="0" class="form-control discount"
+                                    placeholder="@_localizer["Discount"]">
+                            </td>
+                            <td scope="col">
+                                <input type="number" readonly class="form-control net" placeholder="@_localizer["Net"]">
+                            </td>
+                            <td scope="col">
+                                <input type="hidden" value="1" id="linestate">
+                            </td>
+                            <td>
+                                <button type="button" class="btn-secondary" id="AddSaleLine">Add</button>
+                            </td>
+
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Invoice</button>
+        </form>
+    </div>
+
+</div>
+<div>
+    <div>
+        <div id="productModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Product</h5>
+
+                    </div>
+                    <div class="modal-body">
+
+                        <form name="addproductForm" method="post">
+                            <div class="form-group">
+                                <label for="name">Product Name</label>
+                                <input type="text" class="form-control" id="name" name="name">
+                            </div>
+                            <button type="button" id="addProduct" class="btn btn-primary m-2">Add Product</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="unitModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Unit of Measurements</h5>
+
+                    </div>
+                    <div class="modal-body">
+
+                        <form name="addUnitForm" method="post">
+                            <div class="form-group">
+                                <label for="unitname">Unit Name</label>
+                                <input type="text" class="form-control" id="unitname" name="unitname">
+                            </div>
+                            <button type="button" id="addUnit" class="btn btn-primary m-2">Add Unit</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $(".price, .count").on("change", updateGrossTotalPrice);
+    function updateGrossTotalPrice(ev) {
+        tr = $(this).closest("tr");
+        let price = tr.find(".price").val();
+        let count = tr.find(".count").val();
+        tr.find(".gross").val(price * count);
+    }
+    $(".gross, .taxes, .discount, .price, .count").on("change", updateNetTotalPrice);
+    function updateNetTotalPrice(ev) {
+        tr = $(this).closest("tr");
+        let gross = tr.find(".gross").val();
+        let taxes = tr.find(".taxes").val();
+        let discount = tr.find(".discount").val();
+        tr.find(".net").val(parseInt(gross) + parseInt(taxes) - parseInt(discount));
+    }
+</script>
+
+<script>
+    // Search Products (On Focus it send an ajax but onchange it works with client side object)
+    var products = [];
+    $(".product").on("focus", onProductFocus);
+    $(".product").on("keyup", onProductChange);
+    @* $(".product").on("blur", collapseProductDropdowns); *@
+        function onProductFocus(ev) {
+            $(".products-list").removeClass("show");
+            tr = $(this).closest("tr");
+            tr.find(".products-list").addClass("show");
+            $.ajax({
+                type: "GET",
+                url: "/api/products",
+                error: function (xhr, opts, err) {
+                    console.log(xhr);
+                },
+                success: function (data) {
+                    products = data;
+                    $(ev.currentTarget).keyup();
+                }
+            });
+        }
+    function onProductChange(ev) {
+        tr = $(this).closest("tr");
+        let srchString = tr.find(".product").val();
+        let selectedProducts = products.filter((item, idx, arr) => item.name.includes(srchString))
+        let html = selectedProducts.map((val, idx, arr) => `<a class="dropdown-item product-item" data-value="${val.id}">${val.name}</a>`).join("");
+        html = `<a class="dropdown-item product-add-link bg-success">--Add New product--</a>` + html;
+        tr.find(".products-list").html(html);
+    }
+    $(".products-list").on("click", "a.product-item", function () {
+        tr = $(this).closest("tr");
+        tr.find(".productId").val($(this)[0].dataset.value)
+        tr.find(".product").val($(this).text())
+        tr.find(".products-list").removeClass("show");
+    });
+    $(".products-list").on("click", "a.product-add-link", function () {
+        $('#productModal').modal('show');
+    });
+    function collapseProductDropdowns() {
+        $(".products-list").removeClass("show");
+    }
+</script>
+
+<script>
+    // Search Products (On Focus it send an ajax but onchange it works with client side object)
+    var units = [];
+    $(".unit").on("focus", onUnitFocus);
+    $(".unit").on("keyup", onUnitChange);
+    @* $(".unit").on("blur", collapseUnitDropdowns); *@
+        function onUnitFocus(ev) {
+            $(".units-list").removeClass("show");
+            tr = $(this).closest("tr");
+            tr.find(".units-list").addClass("show");
+            $.ajax({
+                type: "GET",
+                url: "/api/uoms",
+                error: function (xhr, opts, err) {
+                    console.log(xhr);
+                },
+                success: function (data) {
+                    units = data;
+                    $(ev.currentTarget).keyup();
+                }
+            });
+        }
+    function onUnitChange(ev) {
+        tr = $(this).closest("tr");
+        let srchString = tr.find(".unit").val();
+        let selectedUnits = units.filter((item, idx, arr) => item.name.includes(srchString))
+        let html = selectedUnits.map((val, idx, arr) => `<a class="dropdown-item unit-item" data-value="${val.id}">${val.name}</a>`).join("");
+        html = `<a class="dropdown-item unit-add-link bg-success">--Add New Unit--</a>` + html;
+        tr.find(".units-list").html(html);
+    }
+    $(".units-list").on("click", "a.unit-item", function () {
+        tr = $(this).closest("tr");
+        tr.find(".unitId").val($(this)[0].dataset.value)
+        tr.find(".unit").val($(this).text())
+        tr.find(".units-list").removeClass("show");
+    });
+    $(".units-list").on("click", "a.unit-add-link", function () {
+        $('#unitModal').modal('show');
+    });
+    function collapseUnitDropdowns() {
+        $(".units-list").removeClass("show");
+    }
+</script>
+
+<script>
+    $("#addProduct").on("click", function () {
+        let name = $("#name").val();
+        if (name == "") { return; }
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name })
+        };
+        fetch("/api/products", requestOptions).then(function (dt) {
+            $("#name").val("");
+            $("#productModal").modal("hide");
+        }).catch(reason => console.log(reason));
+
+    })
+</script>
+
+<script>
+    $("#addUnit").on("click", function () {
+        let name = $("#unitname").val();
+        if (name == "") { return; }
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name })
+        };
+        fetch("/api/uoms", requestOptions).then(function (dt) {
+            $("#unitname").val("");
+            $("#unitModal").modal("hide");
+            $("#unit").focus();
+        }).catch(reason => console.log(reason));
+
+    })
+</script>
+
+<script>
+    function checkProductExistence(productName) {
+        if ($("#invoice-lines tbody tr").length == 0)
+            return false;
+        return $.makeArray($("#invoice-lines tbody tr")).some((el, idx, arr) => {
+            return $(el.cells[2]).text() == productName;
+        });
+    }
+
+    // Change Line State in case of update
+    $(".taxes, .discount, .price, .count, .productId,.unitId, .product, .unit").on("change", updateLineState);
+    function updateLineState(ev) {
+        tr = $(this).closest("tr");
+        if (tr.find(".linestate").val() == "UnChanged")
+            tr.find(".linestate").val("4");// Updated (Consider that only lines already fetched from db can be updated and add lines consider added always unless deleted which really deleted!!!)
+    }
+
+    // AddSaleLine 
+    $("#AddSaleLine").on("click", function () {
+        var tr = $(this).closest("tr");
+        var productId = tr.find(".productId").val();
+        var product = tr.find(".product").val();
+        var unitId = tr.find(".unitId").val();
+        var unit = tr.find(".unit").val();
+        var count = tr.find(".count").val();
+        var discount = tr.find(".discount").val();
+        var taxes = tr.find(".taxes").val();
+        var gross = tr.find(".gross").val();
+        var net = tr.find(".net").val();
+        var price = tr.find(".price").val();
+        var state = tr.find(".linestate").val();
+        if (productId == "" || unitId == "" || count == "" || price == "") {
+            alert("You should fill all the required filled");
+        } else {
+            var lineCounts = $("#invoice-lines tbody>tr").length;
+            var idx = lineCounts;
+            $("#invoice-lines tbody").append(
+                `
+                <tr>
+                                    <td scope="col">
+                                        <input readonly required type="hidden" name="Invoice.SalesLines[${idx}].Id" class="id"
+                                    value="">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="hidden" name="Invoice.SalesLines[${idx}].ProductId" class="productId"
+                                    value="${productId}">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="text" class="form-control dropdown product"
+                                    placeholder="@_localizer["Product"]"
+                                    value="${product}">
+                                        <div class="dropdown-menu products-list">
+                                        </div>
+                                    </td>
+                                    <td scope="col">
+                                        <input type="number"
+                                    value="${price}"
+                                    class="form-control price" name="Invoice.SalesLines[${idx}].UnitPrice"
+                                    placeholder="@_localizer["Price"]">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="hidden" class="unitId" name="Invoice.SalesLines[${idx}].UnitOfMeasurementId"
+                                    value="${unitId}">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="text" class="form-control dropdown unit"
+                                    value="${unit}"
+                                    placeholder="@_localizer["Unit"]">
+                                        <div class="dropdown-menu units-list">
+                                        </div>
+                                    </td>
+                                    <td scope="col">
+                                        <input type="number"
+                                    value="${count}"
+                                    class="form-control count" name="Invoice.SalesLines[${idx}].Count"
+                                    placeholder="@_localizer["Count"]">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="number" readonly
+                                    value="${gross}"
+                                    class="form-control gross" name="Invoice.SalesLines[${idx}].GrossTotalPrice"
+                                    placeholder="@_localizer["Gross"]">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="number"
+                                    value="${taxes}"
+                                    class="form-control taxes" name="Invoice.SalesLines[${idx}].Taxes"
+                                    placeholder="@_localizer["Taxes"]">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="number"
+                                    value="${discount}"
+                                    class="form-control discount" name="Invoice.SalesLines[${idx}].Discount"
+                                    placeholder="@_localizer["Discount"]">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="number" readonly
+                                    value="${net}"
+                                    class="form-control net" name="Invoice.SalesLines[${idx}].NetTotalPrice"
+                                    placeholder="@_localizer["Net"]">
+                                    </td>
+                                    <td scope="col">
+                                        <input type="hidden"
+                                    value="1"
+                                    class="form-control linestate" name="Invoice.SalesLines[${idx}].InvoiceLineState">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn-secondary RemoveSaleLine">Remove</button>
+                                    </td>
+                                </tr>
+                `
+            );
+
+            tr.find(".productId").val("");
+            tr.find(".product").val("");
+            tr.find(".unitId").val("");
+            tr.find(".unit").val("");
+            tr.find(".price").val("0");
+            tr.find(".count").val("0");
+            tr.find(".gross").val("");
+            tr.find(".taxes").val("0");
+            tr.find(".discount").val("0");
+            tr.find(".net").val("");
+            tr.find(".linestate").val("1");
+        }
+    });
+    $("#invoice-lines tbody tr").on("click", ".RemoveSaleLine", function (event) {
+        var tr = $(this).closest("tr");
+        tr.find(".linestate").val(2); //2 is for deleted line state!!
+        tr.css("display", "none"); // We do not really delete the tr since it break the order of items which makes work unsure!
+    })
+
+    $(".gross, .taxes, .discount, .price, .count").on("focus", function (event) {
+        @* var tr = $(this).closest("tr"); *@
+            $(document).find(".dropdown-menu").removeClass("show");
+    })
+</script>
+
+}

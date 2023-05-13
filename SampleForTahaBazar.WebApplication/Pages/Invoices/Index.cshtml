@@ -1,0 +1,46 @@
+@page
+@model SampleForTahaBazar.WebApplication.Invoices.IndexPageModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
+@inject IViewLocalizer _localizer
+@{
+    @* ViewData["Title"] = "Index"; *@
+}
+
+
+<div class="row mb-2">
+    <div class="col-6">@_localizer["Total Invoice Count"]=@(Model.Input?.InvoiceCounts??0)</div>
+    <div class="col-6 "><a role="button" asp-page="Create" class="btn btn-primary"  style="float:right">@_localizer["New Inovoice"]</a></div>
+</div>
+<div class="Row mt-2">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="col-1">@_localizer["Id"]</th>
+                <th class="col-2">@_localizer["Invoice Date"]</th>
+                <th class="col-6">@_localizer["Description"]</th>
+                <th class="col-1">@_localizer["Details"]</th>
+                <th class="col-1">@_localizer["Edit"]</th>
+                <th class="col-1">@_localizer["Delete"]</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model?.Input?.Invoices is not null)
+            {
+                foreach (var item in Model.Input.Invoices)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.InvoiceDate.ToString("yyyy-MM-dd")</td>
+                        <td>@item.Description</td>
+                        <td><a class="btn btn-secondary" asp-page="Details" asp-route-id="@item.Id">@_localizer["View"]</a></td>
+                        <td><a class="btn btn-warning" asp-page="Edit" asp-route-id="@item.Id">@_localizer["Edit"]</a></td>
+                        <td><a class="btn btn-danger" asp-page="Delete" asp-route-id="@item.Id">@_localizer["Delete"]</a></td>
+                    </tr>
+                }
+            }
+            
+        </tbody>
+    </table>
+</div>

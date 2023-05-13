@@ -1,0 +1,393 @@
+@page
+@model SampleForTahaBazar.WebApplication.Pages.Invoices.Create
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
+@inject IViewLocalizer _localizer
+@{
+    ViewData["Title"] = _localizer["Create New Invoice"];
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <div class="card p-3 bg-light">
+        <form id="invoice-dto" name="invoice" method="post">
+
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="invoiceDate">@_localizer["Invoice Date"]</label>
+                        <input type="date" pattern="dd-MM-yyyy" value="@DateTimeOffset.Now.ToString("yyyy-MM-dd")"
+                            class="form-control" id="invoiceDate" required>
+
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="form-group">
+                        <label for="description">@_localizer["Description"]</label>
+                        <textarea class="form-control" id="description" required></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <h4 class="mt-5">@_localizer["Products"]</h4>
+            <div>
+                <table id="invoice-lines" class="table table-condensed table-sm">
+
+                    <thead>
+                        <tr>
+                            <th style="max-width:0;" scope="col"></th>
+                            <th scope="col">@_localizer["Product"]</th>
+                            <th scope="col">@_localizer["Price"]</th>
+                            <th style="max-width: 0;" scope="col"></th>
+                            <th scope="col">@_localizer["Unit"]</th>
+                            <th scope="col">@_localizer["Count"]</th>
+                            <th scope="col">@_localizer["Gross"]</th>
+                            <th scope="col">@_localizer["Taxes"]</th>
+                            <th scope="col">@_localizer["Discount"]</th>
+                            <th scope="col">@_localizer["Net"]</th>
+                            <th scope="col">@_localizer["X"]</th>
+                            <th style="max-width: 0;" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td scope="col">
+                                <input type="hidden" id="productId">
+                            </td>
+                            <td scope="col">
+                                <input type="text" class="form-control dropdown" id="product"
+                                    placeholder="@_localizer["Product"]">
+                                <div id="products-list" class="dropdown-menu">
+                                </div>
+                            </td>
+                            <td scope="col">
+                                <input type="number" value="0" class="form-control" id="price"
+                                    placeholder="@_localizer["Price"]">
+                            </td>
+                            <td scope="col">
+                                <input type="hidden" id="unitId">
+                            </td>
+                            <td scope="col">
+                                <input type="text" class="form-control dropdown" id="unit"
+                                    placeholder="@_localizer["Unit"]">
+                                <div id="units-list" class="dropdown-menu">
+                                </div>
+                            </td>
+                            <td scope="col">
+                                <input type="number" value="0" class="form-control" id="count"
+                                    placeholder="@_localizer["Count"]">
+                            </td>
+                            <td scope="col">
+                                <input type="number" readonly class="form-control" id="gross"
+                                    placeholder="@_localizer["Gross"]">
+                            </td>
+                            <td scope="col">
+                                <input type="number" value="0" class="form-control" id="taxes"
+                                    placeholder="@_localizer["Taxes"]">
+                            </td>
+                            <td scope="col">
+                                <input type="number" value="0" class="form-control" id="discount"
+                                    placeholder="@_localizer["Discount"]">
+                            </td>
+                            <td scope="col">
+                                <input type="number" readonly class="form-control" id="net"
+                                    placeholder="@_localizer["Net"]">
+                            </td>
+                            <td scope="col">
+                                <input type="hidden" value="1" id="linestate">
+                            </td>
+                            <td>
+                                <button type="button" class="btn-secondary" id="AddSaleLine">Add</button>
+                            </td>
+
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <button type="submit" id="register-invoice" class="btn btn-primary mb-2">Register</button>
+        </form>
+    </div>
+</div>
+<div>
+    <div id="productModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Product</h5>
+
+                </div>
+                <div class="modal-body">
+
+                    <form name="addproductForm" method="post">
+                        <div class="form-group">
+                            <label for="name">Product Name</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        <button type="button" id="addProduct" class="btn btn-primary m-2">Add Product</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div id="unitModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Unit of Measurements</h5>
+
+                </div>
+                <div class="modal-body">
+
+                    <form name="addUnitForm" method="post">
+                        <div class="form-group">
+                            <label for="unitname">Unit Name</label>
+                            <input type="text" class="form-control" id="unitname" name="unitname">
+                        </div>
+                        <button type="button" id="addUnit" class="btn btn-primary m-2">Add Unit</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $("#price, #count").on("change", updateGrossTotalPrice);
+    function updateGrossTotalPrice(ev) {
+        let price = $("#price").val();
+        let count = $("#count").val();
+        $("#gross").val(price * count);
+    }
+    $("#gross, #taxes, #discount, #price, #count").on("change", updateNetTotalPrice);
+    function updateNetTotalPrice(ev) {
+        let gross = $("#gross").val();
+        let taxes = $("#taxes").val();
+        let discount = $("#discount").val();
+        $("#net").val(parseInt(gross) + parseInt(taxes) - parseInt(discount));
+    }
+</script>
+<script>
+    // Search Products (On Focus it send an ajax but onchange it works with client side object)
+    var products = [];
+    $("#product").on("focus", onProductFocus);
+    $("#product").on("keyup", onProductChange);
+    @* $("#product").on("blur", collapseProductDropdowns); *@
+        function onProductFocus(ev) {
+            $("#products-list").addClass("show");
+            $.ajax({
+                type: "GET",
+                url: "/api/products",
+                error: function (xhr, opts, err) {
+                    console.log(xhr);
+                },
+                success: function (data) {
+                    products = data;
+                }
+            }).done(onProductChange);
+        }
+    function onProductChange(ev) {
+        let srchString = document.getElementById("product").value;
+        let selectedProducts = products.filter((item, idx, arr) => item.name.includes(srchString))
+        let html = selectedProducts.map((val, idx, arr) => `<a class="dropdown-item product-item" data-value="${val.id}">${val.name}</a>`).join("");
+        html = `<a class="dropdown-item product-add-link bg-success">--Add New product--</a>` + html;
+        document.getElementById("products-list").innerHTML = html;
+    }
+    $("#products-list").on("click", "a.product-item", function () {
+        @* console.log($(this)); *@
+            $("#productId").val($(this)[0].dataset.value);
+        $("#product").val($(this).text())
+        $("#products-list").removeClass("show");
+        if (checkProductExistence($(this).text())) {
+            alert("Existed Item!!");
+        }
+    });
+    $("#products-list").on("click", "a.product-add-link", function () {
+        $('#productModal').modal('show');
+    });
+    function collapseProductDropdowns() {
+        $("#products-list").removeClass("show");
+    }
+</script>
+
+<script>
+    $("#addProduct").on("click", function () {
+        let name = $("#name").val();
+        if (name == "") { return; }
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name })
+        };
+        fetch("/api/products", requestOptions).then(function (dt) {
+            $("#name").val("");
+            $("#productModal").modal("hide");
+            $("#product").focus();
+        }).catch(reason => console.log(reason));
+
+    })
+</script>
+
+<script>
+    // Search Products (On Focus it send an ajax but onchange it works with client side object)
+    var uoms = [];
+    $("#unit").on("focus", onUnitFocus);
+    $("#unit").on("keyup", onUnitChange);
+    @* $("#unit").on("blur", collapseUnitDropdowns); *@
+        function onUnitFocus(ev) {
+            $("#units-list").addClass("show");
+            $.ajax({
+                type: "GET",
+                url: "/api/uoms",
+                error: function (xhr, opts, err) {
+                    console.log(xhr);
+                },
+                success: function (data) {
+                    uoms = data;
+                }
+            }).done(onUnitChange);
+        }
+    function onUnitChange(ev) {
+        let srchString = document.getElementById("unit").value;
+        let selectedUnits = uoms.filter((item, idx, arr) => item.name.includes(srchString))
+        let html = selectedUnits.map((val, idx, arr) => `<a class="dropdown-item unit-item" data-value="${val.id}">${val.name}</a>`).join("");
+        html = `<a class="dropdown-item unit-add-link bg-success">--Add New Unit--</a>` + html;
+        document.getElementById("units-list").innerHTML = html;
+    }
+    function collapseUnitDropdowns() {
+        $("#units-list").removeClass("show");
+    }
+    $("#units-list").on("click", "a.unit-item", function () {
+        @* console.log($(this)); *@
+            $("#unitId").val($(this)[0].dataset.value)
+        $("#unit").val($(this).text())
+        $("#units-list").removeClass("show");
+    });
+    $("#units-list").on("click", "a.unit-add-link", function () {
+        $('#unitModal').modal('show');
+    });
+</script>
+
+<script>
+    $("#addUnit").on("click", function () {
+        let name = $("#unitname").val();
+        if (name == "") { return; }
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name })
+        };
+        fetch("/api/uoms", requestOptions).then(function (dt) {
+            $("#unitname").val("");
+            $("#unitModal").modal("hide");
+            $("#unit").focus();
+        }).catch(reason => console.log(reason));
+
+    })
+</script>
+
+
+<script>
+    function checkProductExistence(productName) {
+        if ($("#invoice-lines tbody tr").length == 0)
+            return false;
+        return $.makeArray($("#invoice-lines tbody tr")).some((el, idx, arr) => {
+            return $(el.cells[1]).text() == productName;
+        });
+    }
+    $("#AddSaleLine").on("click", function () {
+        var productId = $("#productId").val();
+        var product = $("#product").val();
+        var unitId = $("#unitId").val();
+        var unit = $("#unit").val();
+        var count = $("#count").val();
+        var discount = $("#discount").val();
+        var taxes = $("#taxes").val();
+        var gross = $("#gross").val();
+        var net = $("#net").val();
+        var price = $("#price").val();
+        var state = $("#linestate").val();
+        if (productId == "" || unitId == "" || count == "" || price == "") {
+            alert("You should fill all the required filled");
+        } else if (checkProductExistence(product)) {
+            alert("Each product can only be added once to a factor (Your item already exist in the list)");
+        } else {
+            $("#invoice-lines tbody").append(
+                `<tr>
+        <td style="opacity:0">${productId}</td>
+        <td>${product}</td>
+        <td>${price}</td>
+        <td style="opacity:0">${unitId}</td>
+        <td>${unit}</td>
+        <td>${count}</td>
+        <td>${gross}</td>
+        <td>${taxes}</td>
+        <td>${discount}</td>
+        <td>${net}</td>
+        <td style="opacity:0">${state}</td>
+        <td><button class="removeProduct btn-secondary">Remove</button></td>
+    </tr>`
+            );
+            $("#productId").val("");
+            $("#product").val("");
+            $("#unitId").val("");
+            $("#unit").val("");
+            $("#price").val("0");
+            $("#count").val("0");
+            $("#gross").val("");
+            $("#taxes").val("0");
+            $("#discount").val("0");
+            $("#net").val("");
+            $("#linestate").val("1");
+        }
+    });
+    $("#invoice-lines tbody").on("click", ".removeProduct", function () {
+        $(this).closest("tr").remove();
+    })
+
+    document.getElementById("invoice-dto").addEventListener("formdata", formSubmitCallback);
+
+    function formSubmitCallback(event) {
+        @* event.preventDefault(); *@
+            @* var formData = new FormData(event.target); *@
+            debugger;
+        event.formData.set("InvoiceDto.InvoiceDate", $("#invoiceDate").val());
+        event.formData.set("InvoiceDto.Description", $("#description").val());
+        var saleLines = $("#invoice-lines tbody tr").map(function () {
+            return {
+                productId: $(this.cells[0]).text(),
+                price: $(this.cells[2]).text(),
+                unitId: $(this.cells[3]).text(),
+                count: $(this.cells[5]).text(),
+                taxes: $(this.cells[7]).text(),
+                discount: $(this.cells[8]).text(),
+                invoiceLineState: $(this.cells[10]).text(),
+            }
+        }).get(); // This return an html element so we should map it to formData
+        $.each(saleLines, function (i, el) {
+            event.formData.set(`InvoiceDto.SalesLines[${i}].ProductId`, el.productId);
+            event.formData.set(`InvoiceDto.SalesLines[${i}].UnitPrice`, el.price);
+            event.formData.set(`InvoiceDto.SalesLines[${i}].UnitOfMeasurementId`, el.unitId);
+            event.formData.set(`InvoiceDto.SalesLines[${i}].Count`, el.count);
+            event.formData.set(`InvoiceDto.SalesLines[${i}].Taxes`, el.taxes);
+            event.formData.set(`InvoiceDto.SalesLines[${i}].Discount`, el.discount);
+            event.formData.set(`InvoiceDto.SalesLines[${i}].InvoiceLineState`, 1);
+        });
+    }
+
+</script>
+
+}

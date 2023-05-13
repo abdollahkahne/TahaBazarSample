@@ -1,0 +1,198 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.WebApplication/SampleForTahaBazar.WebApplication.csproj": {}
+  },
+  "projects": {
+    "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/SampleForTahaBazar.Entities.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/SampleForTahaBazar.Entities.csproj",
+        "projectName": "SampleForTahaBazar.Entities",
+        "projectPath": "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/SampleForTahaBazar.Entities.csproj",
+        "packagesPath": "/home/lithium/.nuget/packages/",
+        "outputPath": "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/lithium/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "SharpPad": {
+              "target": "Package",
+              "version": "[1.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/SampleForTahaBazar.Services.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/SampleForTahaBazar.Services.csproj",
+        "projectName": "SampleForTahaBazar.Services",
+        "projectPath": "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/SampleForTahaBazar.Services.csproj",
+        "packagesPath": "/home/lithium/.nuget/packages/",
+        "outputPath": "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/lithium/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/SampleForTahaBazar.Entities.csproj": {
+                "projectPath": "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/SampleForTahaBazar.Entities.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.WebApplication/SampleForTahaBazar.WebApplication.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.WebApplication/SampleForTahaBazar.WebApplication.csproj",
+        "projectName": "SampleForTahaBazar.WebApplication",
+        "projectPath": "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.WebApplication/SampleForTahaBazar.WebApplication.csproj",
+        "packagesPath": "/home/lithium/.nuget/packages/",
+        "outputPath": "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.WebApplication/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/lithium/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/SampleForTahaBazar.Services.csproj": {
+                "projectPath": "/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/SampleForTahaBazar.Services.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

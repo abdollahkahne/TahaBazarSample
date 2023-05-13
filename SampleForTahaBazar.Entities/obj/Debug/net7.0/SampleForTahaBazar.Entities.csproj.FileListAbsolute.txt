@@ -1,0 +1,12 @@
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/bin/Debug/net7.0/SampleForTahaBazar.Entities.deps.json
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/bin/Debug/net7.0/SampleForTahaBazar.Entities.dll
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/bin/Debug/net7.0/SampleForTahaBazar.Entities.pdb
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/obj/Debug/net7.0/SampleForTahaBazar.Entities.csproj.AssemblyReference.cache
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/obj/Debug/net7.0/SampleForTahaBazar.Entities.GeneratedMSBuildEditorConfig.editorconfig
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/obj/Debug/net7.0/SampleForTahaBazar.Entities.AssemblyInfoInputs.cache
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/obj/Debug/net7.0/SampleForTahaBazar.Entities.AssemblyInfo.cs
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/obj/Debug/net7.0/SampleForTahaBazar.Entities.csproj.CoreCompileInputs.cache
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/obj/Debug/net7.0/SampleForTahaBazar.Entities.dll
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/obj/Debug/net7.0/refint/SampleForTahaBazar.Entities.dll
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/obj/Debug/net7.0/SampleForTahaBazar.Entities.pdb
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Entities/obj/Debug/net7.0/ref/SampleForTahaBazar.Entities.dll

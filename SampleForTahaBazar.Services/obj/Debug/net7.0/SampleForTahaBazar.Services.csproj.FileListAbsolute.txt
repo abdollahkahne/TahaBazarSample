@@ -1,0 +1,15 @@
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/bin/Debug/net7.0/SampleForTahaBazar.Services.deps.json
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/bin/Debug/net7.0/SampleForTahaBazar.Services.dll
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/bin/Debug/net7.0/SampleForTahaBazar.Services.pdb
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/bin/Debug/net7.0/SampleForTahaBazar.Entities.dll
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/bin/Debug/net7.0/SampleForTahaBazar.Entities.pdb
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/obj/Debug/net7.0/SampleForTahaBazar.Services.csproj.AssemblyReference.cache
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/obj/Debug/net7.0/SampleForTahaBazar.Services.GeneratedMSBuildEditorConfig.editorconfig
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/obj/Debug/net7.0/SampleForTahaBazar.Services.AssemblyInfoInputs.cache
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/obj/Debug/net7.0/SampleForTahaBazar.Services.AssemblyInfo.cs
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/obj/Debug/net7.0/SampleForTahaBazar.Services.csproj.CoreCompileInputs.cache
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/obj/Debug/net7.0/SampleForTahaBazar.Services.csproj.CopyComplete
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/obj/Debug/net7.0/SampleForTahaBazar.Services.dll
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/obj/Debug/net7.0/refint/SampleForTahaBazar.Services.dll
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/obj/Debug/net7.0/SampleForTahaBazar.Services.pdb
+/home/lithium/Desktop/Samples/SampleForTahaBazar/SampleForTahaBazar.Services/obj/Debug/net7.0/ref/SampleForTahaBazar.Services.dll

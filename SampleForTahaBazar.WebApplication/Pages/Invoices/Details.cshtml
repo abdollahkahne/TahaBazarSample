@@ -1,0 +1,92 @@
+@page
+@model SampleForTahaBazar.WebApplication.Pages.Invoices.Details
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
+@inject IViewLocalizer _localizer
+@{
+    ViewData["Title"] = _localizer["Details"];
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <div class="card p-3 bg-light">
+        <div class="row mb-3">
+            <div class="col-2">
+                <a href="/Invoices/Index">Back To List</a>
+            </div>
+            <div class="col-8"></div>
+            <div class="col-2">
+                <a asp-page="Edit" asp-route-id="@Model.ItemId">Edit Invoice</a>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col">
+                <b>Invoicde Date:</b>
+                @Model.InvoiceDetails.Invoice.InvoiceDate.ToString("yyyy-MM-dd")
+            </div>
+            <div class="col">
+                <b>Description:</b>
+                @Model.InvoiceDetails.Invoice.Description
+            </div>
+        </div>
+        <div>
+            <table id="invoice-lines" class="table table-condensed table-sm table-striped">
+
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">@_localizer["Product"]</th>
+                        <th scope="col">@_localizer["Price"]</th>
+                        <th scope="col">@_localizer["Count"]</th>
+                        <th scope="col">@_localizer["Unit"]</th>
+                        <th scope="col">@_localizer["Gross"]</th>
+                        <th scope="col">@_localizer["Taxes"]</th>
+                        <th scope="col">@_localizer["Discount"]</th>
+                        <th scope="col">@_localizer["Net"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if (Model.InvoiceDetails.Invoice.SalesLines is not null)
+                    {
+                        int ctr = 0;
+                        foreach (var item in Model.InvoiceDetails.Invoice.SalesLines)
+                        {
+                            <tr>
+                                @{
+                                    ctr++;
+
+                                }
+                                <td>@ctr</td>
+                                <td>@item.Product?.Name</td>
+                                <td>@item.UnitPrice.ToString("N2")</td>
+                                <td>@item.Count</td>
+                                <td>@item.UnitOfMeasurement?.Name</td>
+                                <td>@item.GrossTotalPrice.ToString("N0")</td>
+                                <td>@item.Taxes.ToString("N0")</td>
+                                <td>@item.Discount.ToString("N0")</td>
+                                <td>@item.NetTotalPrice.ToString("N0")</td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>@Model.InvoiceDetails.GrossTotal?.ToString("N0")</td>
+                        <td>@Model.InvoiceDetails.Totaltax?.ToString("N0")</td>
+                        <td>@Model.InvoiceDetails.TotalDiscount?.ToString("N0")</td>
+                        <td>@Model.InvoiceDetails.Total?.ToString("N0")</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+</div>
